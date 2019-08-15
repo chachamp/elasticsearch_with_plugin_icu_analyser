@@ -1,0 +1,25 @@
+version: '3'
+services:
+  elastic:
+    image: elasticsearch:7.3.0
+    volumes: ./plugin/analysis-icu:/usr/share/elasticsearch/plugins
+    container_name: elastic
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      DISCOVERY.TYPE: single-node
+    netoworks:
+      - elasticnetwork
+
+  kibana:
+    image: kibana:7.3.0
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    netoworks:
+      - elasticnetwork
+      
+networks:
+    elasticnetwork:
+      driver: bridge
